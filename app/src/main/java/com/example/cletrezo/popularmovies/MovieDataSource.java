@@ -22,13 +22,13 @@ public class MovieDataSource {
     private final static String MOVIE_POSTERPATH = "poster_path";
     private final static String MOVIE_DESCRIPTION = "overview";
     private final static String MOVIE_RELEASEDATE = "release_date";
-    private final static String API_KEY = "499681bbe970c4022989fc7947723eb5";// paste api key inside the double quote
+    private final static String API_KEY = "";// paste api key inside the double quote
 
 
     private static ArrayList<Movie> listOfMovies = new ArrayList<>(); // ArrayList to hold movies instantiated
 
 
-
+    //Return array of objects
     public static ArrayList<Movie> movieArrayList(){
         RequestQueue mRequestQueue = VolleySingleton.getmInstance().getmRequestQueue();
 

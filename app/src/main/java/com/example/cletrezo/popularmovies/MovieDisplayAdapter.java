@@ -35,7 +35,7 @@ public class MovieDisplayAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return movies.get(position).getMovieid(); // returning movie id for intent purposes
     }
     class ViewHolder {
         ImageView imageView;
@@ -49,10 +49,11 @@ public class MovieDisplayAdapter extends BaseAdapter {
 
 
         ViewHolder holder;
+        LayoutInflater inflater = LayoutInflater.from(context);
 
         if (convertView == null) {
-            LayoutInflater inflater = LayoutInflater.from(context);
-            convertView = inflater.inflate(R.layout.single_row, parent, false);
+
+            convertView = inflater.inflate(R.layout.single_row,parent,false);
             holder= new ViewHolder(convertView);
             convertView.setTag(holder);
 
