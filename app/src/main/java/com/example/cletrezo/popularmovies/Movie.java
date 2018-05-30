@@ -1,19 +1,19 @@
 package com.example.cletrezo.popularmovies;
 
-import com.google.gson.annotations.SerializedName;
+
 
 public class Movie {
-    @SerializedName("id")
+
     private int movieid;
-    @SerializedName("vote_average")
+
     private double movieRating;
-    @SerializedName("original_title")
+
     private String movieTitle;
-    @SerializedName("poster_path")
+
     private String movieImagePath;
-    @SerializedName("overview")
+
     private String movieDescripton;
-    @SerializedName("release_date")
+
     private String movieReleaseDate;
 
 

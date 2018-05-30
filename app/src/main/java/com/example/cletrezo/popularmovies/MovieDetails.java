@@ -9,40 +9,31 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-
 public class MovieDetails extends AppCompatActivity {
-
 
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
-
+        getSupportActionBar().setTitle("Movie Detalis");
         TextView movieTitleTextView = findViewById(R.id.movieTitle);
         ImageView movieImageView = findViewById(R.id.movieImage);
         TextView  movieReleaseDateView = findViewById(R.id.movieReleaseDate);
         TextView  movieRatingView = findViewById(R.id.movieRating);
         TextView movieDescriptionView = findViewById(R.id.movieDescription);
 
-
-        ArrayList<Movie>movies = MovieDataSource.movieArrayList();//pull movies from datasource
-
-        Intent intent = getIntent(); // get the intent passed from MainActivity
-        int positionOfItemClicked = intent.getExtras().getInt(MainActivity.Image_position);
-        movieTitleTextView.setText(movies.get(positionOfItemClicked).getMovieTitle()); // set movie title
+        movieTitleTextView.setText(getIntent().getExtras().get(MainActivity.MOVIE_TITLE).toString()); // set movie title
 
         Picasso.with(this)
-                .load(movies.get(positionOfItemClicked).getMovieImagePath())
+                .load(getIntent().getExtras().get(MainActivity.MOVIE_IMAGE).toString())
                 .fit()
-                .centerCrop()
+                .placeholder(R.drawable.progress_file)
+                .error(R.drawable.ic_launcher_background)
                 .into(movieImageView);
 
-        movieReleaseDateView.setText(movies.get(positionOfItemClicked).getMovieReleaseDate());
-        movieRatingView.setText(String.valueOf(movies.get(positionOfItemClicked).getMovieRating()));
-        movieDescriptionView.setText(movies.get(positionOfItemClicked).getMovieDescripton());
+        movieReleaseDateView.setText(getIntent().getExtras().get(MainActivity.MOVIE_RELEASE_DATE).toString());
+        movieRatingView.setText(getIntent().getExtras().get(MainActivity.MOVIE_RATING).toString());
+        movieDescriptionView.setText(getIntent().getExtras().get(MainActivity.MOVIE_DESCRIPTION).toString());
 
     }
 }
