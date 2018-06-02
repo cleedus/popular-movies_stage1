@@ -1,8 +1,10 @@
 package com.example.cletrezo.popularmovies;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class Movie {
+public class Movie implements Parcelable {
 
     private int movieid;
 
@@ -15,8 +17,6 @@ public class Movie {
     private String movieDescripton;
 
     private String movieReleaseDate;
-
-
     final String path1 = "http://image.tmdb.org/t/p";
     final  String path2 = "w185";
 
@@ -28,9 +28,10 @@ public class Movie {
         this.movieDescripton=movieDescripton;
         this.movieReleaseDate=movieReleaseDate;
 
+
     }
 
-    public void setMovieid(int movieid) {
+     public void setMovieid(int movieid) {
         this.movieid = movieid;
     }
     public void setMovieRating(double movieRating){
@@ -56,7 +57,7 @@ public class Movie {
         return movieid;
     }
     public double getMovieRating(){
-        return movieRating;
+        return movieRating ;
     }
 
     public String getMovieTitle() {
@@ -68,10 +69,47 @@ public class Movie {
     }
 
     public String getMovieDescripton() {
-        return movieDescripton;
+        return  movieDescripton;
     }
 
     public String getMovieReleaseDate() {
         return movieReleaseDate;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.movieid);
+        dest.writeDouble(this.movieRating);
+        dest.writeString(this.movieTitle);
+        dest.writeString(this.movieImagePath);
+        dest.writeString(this.movieDescripton);
+        dest.writeString(this.movieReleaseDate);
+
+    }
+
+    private Movie(Parcel in) {
+        this.movieid = in.readInt();
+        this.movieRating = in.readDouble();
+        this.movieTitle = in.readString();
+        this.movieImagePath = in.readString();
+        this.movieDescripton = in.readString();
+        this.movieReleaseDate = in.readString();
+    }
+
+    public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel source) {
+            return new Movie(source);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 }

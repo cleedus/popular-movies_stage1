@@ -1,5 +1,6 @@
 package com.example.cletrezo.popularmovies;
 
+import android.os.Build;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -22,7 +23,7 @@ public class MovieDataSource {
     private final static String MOVIE_POSTERPATH = "poster_path";
     private final static String MOVIE_DESCRIPTION = "overview";
     private final static String MOVIE_RELEASEDATE = "release_date";
-    private final static String API_KEY = "";// paste api key inside the double quote
+    private static final String API_KEY = BuildConfig.API_KEY;
 
     private RequestQueue mRequestQueue = VolleySingleton.getmInstance().getmRequestQueue();
 

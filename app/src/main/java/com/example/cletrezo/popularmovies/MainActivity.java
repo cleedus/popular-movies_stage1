@@ -1,6 +1,7 @@
 package com.example.cletrezo.popularmovies;
 
 import android.content.Intent;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
@@ -23,17 +25,13 @@ import java.util.Set;
 import static android.widget.Toast.LENGTH_SHORT;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String MOVIE_IMAGE = "movieImage";
-    public static final String MOVIE_TITLE = "movieTitle";// Key for clicked image position;
-    public static final String MOVIE_RELEASE_DATE = "movieReleaseDate";// Key for clicked image position;
-    public static final String MOVIE_RATING = "movieRating";// Key for clicked image position;
-    public static final String MOVIE_DESCRIPTION = "movieDescription";// Key for clicked image position;
     public static final int REQUEST_CODE_POPULAR = 1;
     public static final int REQUEST_CODE_TOP_RATED = 2;
     String topRatedMovieUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
     String popularMoviesUrl = "https://api.themoviedb.org/3/movie/popular?api_key=";
+    final static String MOVIE_IN_CURRENT_CLICKED_POSITION= "theMovieInCurrentClickedPosition";
     int counter = 0;
-    private ArrayList<Movie> popularMoviesList = new ArrayList<>();
+    public ArrayList<Movie> popularMoviesList = new ArrayList<>();
     private ArrayList<Movie> topRatedMoviesList = new ArrayList<>();
     private ArrayList<Movie> movies = new ArrayList<>();
 
@@ -43,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
          final GridView gridView = findViewById(R.id.gridview);
         MovieDataSource object = new MovieDataSource();
+
 
         // I got help with the below method from stackoverflow a question i asked
         //https://stackoverflow.com/questions/50553815/using-volley-to-make-2-separate-remote-requests-with-one-method
@@ -65,20 +64,16 @@ public class MainActivity extends AppCompatActivity {
                 Collections.shuffle(movies); // popular + top rated movies----shuffle them. This is default display to the user when they first launch the app
                 Log.i("counter=", String.valueOf(counter));
                 if (counter == 2) { // Do not call the adapter and pass movies for display until background process finishes and movie contains both pop and toprated
-
-                    gridView.setAdapter(new MovieDisplayAdapter(MainActivity.this, movies));
                     Log.i("num of movies passed:", String.valueOf(movies.size()));
+                    gridView.setAdapter(new MovieDisplayAdapter(MainActivity.this, movies));
                     gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             //Toast.makeText(MainActivity.this, "" + "Rated number:" + position, LENGTH_SHORT).show();
                             Intent intent = new Intent(MainActivity.this, MovieDetails.class);
-                            //intent.putExtra(IMAGE_POSITION,position);// when image is clicked, the position of the image is recorded and mapped to image_position
-                            intent.putExtra(MOVIE_IMAGE, movies.get(position).getMovieImagePath());
-                            intent.putExtra(MOVIE_TITLE, movies.get(position).getMovieTitle());
-                            intent.putExtra(MOVIE_RELEASE_DATE, movies.get(position).getMovieReleaseDate());
-                            intent.putExtra(MOVIE_RATING, movies.get(position).getMovieRating());
-                            intent.putExtra(MOVIE_DESCRIPTION, movies.get(position).getMovieDescripton());
+                            //When clicked, the position of the current movie
+                            Movie movieIncurrentClickedPosition = movies.get(position);
+                            intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION,movieIncurrentClickedPosition);
 
                             startActivity(intent);
 
@@ -121,12 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "" + "popularity, number:" + position, LENGTH_SHORT).show();
 
                     Intent intent = new Intent(MainActivity.this, MovieDetails.class);
-                    //intent.putExtra(IMAGE_POSITION,position);// when image is clicked, the position of the image is recorded and mapped to image_position
-                    intent.putExtra(MOVIE_IMAGE, popularMoviesList.get(position).getMovieImagePath());
-                    intent.putExtra(MOVIE_TITLE, popularMoviesList.get(position).getMovieTitle());
-                    intent.putExtra(MOVIE_RELEASE_DATE, popularMoviesList.get(position).getMovieReleaseDate());
-                    intent.putExtra(MOVIE_RATING, popularMoviesList.get(position).getMovieRating());
-                    intent.putExtra(MOVIE_DESCRIPTION, popularMoviesList.get(position).getMovieDescripton());
+                    Movie movieIncurrentClickedPosition = popularMoviesList.get(position);
+                    intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION,movieIncurrentClickedPosition);
 
                     startActivity(intent);
 
@@ -144,13 +135,8 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "" + "Rated number:" + position, LENGTH_SHORT).show();
 
                     Intent intent = new Intent(MainActivity.this, MovieDetails.class);
-                    //intent.putExtra(IMAGE_POSITION,position);// when image is clicked, the position of the image is recorded and mapped to image_position
-                    intent.putExtra(MOVIE_IMAGE, topRatedMoviesList.get(position).getMovieImagePath());
-                    intent.putExtra(MOVIE_TITLE, topRatedMoviesList.get(position).getMovieTitle());
-                    intent.putExtra(MOVIE_RELEASE_DATE, topRatedMoviesList.get(position).getMovieReleaseDate());
-                    intent.putExtra(MOVIE_RATING, topRatedMoviesList.get(position).getMovieRating());
-                    intent.putExtra(MOVIE_DESCRIPTION, topRatedMoviesList.get(position).getMovieDescripton());
-
+                   Movie movieIncurrentClickedPosition=topRatedMoviesList.get(position);
+                    intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION,movieIncurrentClickedPosition);
                     startActivity(intent);
 
                 }
