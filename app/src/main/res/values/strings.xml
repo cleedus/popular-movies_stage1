@@ -7,5 +7,8 @@
     <string name="movie_title">movie title</string>
     <string name="release_data">RELEASE DATE</string>
     <string name="theMovieInCurrentClickedPosition">theMovieInCurrentClickedPosition</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="top_rated_movies">Top Rated Movies</string>
 
 </resources>

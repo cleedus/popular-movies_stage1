@@ -3,7 +3,10 @@ package com.example.cletrezo.popularmovies;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +19,6 @@ public class MovieDetails extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
-        getSupportActionBar().setTitle("Movie Details");
         TextView movieTitleTextView = findViewById(R.id.movieTitle);
         ImageView movieImageView = findViewById(R.id.movieImage);
         TextView  movieReleaseDateView = findViewById(R.id.movieReleaseDate);
@@ -39,5 +41,14 @@ public class MovieDetails extends AppCompatActivity {
         movieRatingView.setText(String.format("%s%s", String.valueOf(movie.getMovieRating()),ratingDenominator));
         movieDescriptionView.setText(movie.getMovieDescripton());
 
+
     }
-}
+
+
+
+
+
+    }
+
+
+

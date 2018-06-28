@@ -29,17 +29,17 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_TOP_RATED = 2;
     String topRatedMovieUrl = "https://api.themoviedb.org/3/movie/top_rated?api_key=";
     String popularMoviesUrl = "https://api.themoviedb.org/3/movie/popular?api_key=";
-    final static String MOVIE_IN_CURRENT_CLICKED_POSITION= "theMovieInCurrentClickedPosition";
+    final static String MOVIE_IN_CURRENT_CLICKED_POSITION = "theMovieInCurrentClickedPosition";
     int counter = 0;
-    public ArrayList<Movie> popularMoviesList = new ArrayList<>();
-    private ArrayList<Movie> topRatedMoviesList = new ArrayList<>();
+    public static ArrayList<Movie> popularMoviesList = new ArrayList<>();
+    public static ArrayList<Movie> topRatedMoviesList = new ArrayList<>();
     private ArrayList<Movie> movies = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         final GridView gridView = findViewById(R.id.gridview);
+        final GridView gridView = findViewById(R.id.gridview);
         MovieDataSource object = new MovieDataSource();
 
 
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                             Intent intent = new Intent(MainActivity.this, MovieDetails.class);
                             //When clicked, the position of the current movie
                             Movie movieIncurrentClickedPosition = movies.get(position);
-                            intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION,movieIncurrentClickedPosition);
+                            intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION, movieIncurrentClickedPosition);
 
                             startActivity(intent);
 
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         object.movieArrayList(topRatedMovieUrl, REQUEST_CODE_TOP_RATED, listener);
         Log.i(" of movies passed:", String.valueOf(movies.size()));
 
-
     }
 
     @Override
@@ -107,47 +106,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.popular) {
-            GridView gridView = findViewById(R.id.gridview);
-            getSupportActionBar().setTitle("Most Popular Movies");
-            gridView.setAdapter(new MovieDisplayAdapter(this, popularMoviesList));
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(MainActivity.this, "" + "popularity, number:" + position, LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(MainActivity.this, MovieDetails.class);
-                    Movie movieIncurrentClickedPosition = popularMoviesList.get(position);
-                    intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION,movieIncurrentClickedPosition);
-
-                    startActivity(intent);
-
-                }
-            });
+            Intent startPopularMoviesActivity = new Intent(this, PopularMoviesActivity.class);
+            startActivity(startPopularMoviesActivity);
+            return  true;
 
         } else if (item.getItemId() == R.id.toprated) {
-            GridView gridView = findViewById(R.id.gridview);
-            getSupportActionBar().setTitle("Top Rated Movies");
-            gridView.setAdapter(new MovieDisplayAdapter(this, topRatedMoviesList));
-            gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    Toast.makeText(MainActivity.this, "" + "Rated number:" + position, LENGTH_SHORT).show();
-
-                    Intent intent = new Intent(MainActivity.this, MovieDetails.class);
-                   Movie movieIncurrentClickedPosition=topRatedMoviesList.get(position);
-                    intent.putExtra(MOVIE_IN_CURRENT_CLICKED_POSITION,movieIncurrentClickedPosition);
-                    startActivity(intent);
-
-                }
-            });
+            Intent startTopRatedMoviesActivity = new Intent(this, TopRatedMoviesActivity.class);
+            startActivity(startTopRatedMoviesActivity);
+            return  true;
 
         } else {
 
 
             return super.onOptionsItemSelected(item);
         }
-        return true;
     }
 }
 
