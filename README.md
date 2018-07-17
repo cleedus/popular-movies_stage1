@@ -1,5 +1,5 @@
 # popular-movies
-add your moviedb apikey to gradle.properties
+Add your moviedb apikey to gradle.properties
 
 SCREENSHOT
 
