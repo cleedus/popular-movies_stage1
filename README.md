@@ -1,5 +1,11 @@
-### POPULAR-MOVIES
-Add your moviedb apikey to gradle.properties
+# popular-movies-1
+Popular movies display a gridview of the most popular and top rated movies.
+Add moviedb.org api key to gradle.properties to try it out.
+
+## Used Libraries
+* Volley
+* Picasso
+
 
 ## SCREENSHOTS
 ![](https://thumbs.gfycat.com/FlawedGreenArcticwolf-size_restricted.gif)
